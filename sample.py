@@ -20,8 +20,8 @@ def homepage():
 def getsubs():
     if flask.request.method == 'POST':
         if 'validationToken' in flask.request.values:
-            print(flask.request.values.get['validationToken'], file=sys.stdout)
-            return flask.Response(flask.request.values.get['validationToken'], status=200, mimetype='text/plain')
+            print(flask.request.values.get('validationToken'), file=sys.stdout)
+            return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
             print('failed', file=sys.stdout)
             return flask.Response('Request')
