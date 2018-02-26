@@ -16,19 +16,21 @@ def homepage():
     """Render the home page."""
     return flask.Response('Homepage')
 
-@APP.route('/getsubs')
+@APP.route('/getsubs', methods=['GET', 'POST'])
 def getsubs():
-    print(flask.request.args, file=sys.stdout)
-    if 'validationToken' in flask.request.args:
-        print(flask.request.args['validationToken'], file=sys.stdout)
-        with open("test.txt","wb") as fo:
-   	        fo.write("Validated".encode())
-        return flask.Response(flask.request.args['validationToken'], status=200, mimetype='text/plain')
+    if flask.request.method == 'POST':
+        if 'validationToken' in flask.request.values:
+            print(flask.request.args['validationToken'], file=sys.stdout)
+            with open("test.txt","wb") as fo:
+       	        fo.write("Validated".encode())
+            return flask.Response(flask.request.values.get['validationToken'], status=200, mimetype='text/plain')
+        else:
+            print('failed', file=sys.stdout)
+            with open("test.txt","wb") as fo:
+       	        fo.write("Request".encode())
+            return flask.Response('Request')
     else:
-        print('failed', file=sys.stdout)
-        with open("test.txt","wb") as fo:
-   	        fo.write("Request".encode())
-        return flask.Response('Request')
+        return falsk.Response('GET')
 
 if __name__ == '__main__':
     APP.run()
