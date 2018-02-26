@@ -20,14 +20,10 @@ def homepage():
 def getsubs():
     if flask.request.method == 'POST':
         if 'validationToken' in flask.request.values:
-            print(flask.request.args['validationToken'], file=sys.stdout)
-            with open("test.txt","wb") as fo:
-       	        fo.write("Validated".encode())
+            print(flask.request.values.get['validationToken'], file=sys.stdout)
             return flask.Response(flask.request.values.get['validationToken'], status=200, mimetype='text/plain')
         else:
             print('failed', file=sys.stdout)
-            with open("test.txt","wb") as fo:
-       	        fo.write("Request".encode())
             return flask.Response('Request')
     else:
         return falsk.Response('GET')
