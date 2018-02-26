@@ -2,6 +2,8 @@
 # Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 # See LICENSE in the project root for license information.
 import mimetypes
+import sys
+
 
 import flask
 
@@ -16,16 +18,16 @@ def homepage():
 
 @APP.route('/getsubs')
 def getsubs():
-	print(flask.request.args)
+    print(flask.request.args, file=sys.stdout)
     if 'validationToken' in flask.request.args:
+        print(flask.request.args['validationToken'], file=sys.stdout)
         with open("test.txt","wb") as fo:
    	        fo.write("Validated".encode())
-   	    print(flask.request.args['validationToken'])
         return flask.Response(flask.request.args['validationToken'], status=200, mimetype='text/plain')
     else:
+        print('failed', file=sys.stdout)
         with open("test.txt","wb") as fo:
    	        fo.write("Request".encode())
-   	    print('failed')
         return flask.Response('Request')
 
 if __name__ == '__main__':
