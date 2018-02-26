@@ -17,8 +17,12 @@ def homepage():
 @APP.route('/getsubs')
 def getsubs():
     if 'validationtoken' in flask.request.args:
+        with open("test.txt","wb") as fo:
+   	        fo.write("Validated".encode())
         return flask.Response('Validated', status=200, mimetype='text/plain')
     else:
+        with open("test.txt","wb") as fo:
+   	        fo.write("Request".encode())
         return flask.Response('Request')
 
 if __name__ == '__main__':
