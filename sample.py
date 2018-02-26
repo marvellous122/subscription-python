@@ -23,7 +23,7 @@ def getsubs():
             print(flask.request.values.get('validationToken'), file=sys.stdout)
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
-            print('failed', file=sys.stdout)
+            print(flask.request.values, file=sys.stdout)
             return flask.Response('Request')
     else:
         return falsk.Response('GET')
