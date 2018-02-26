@@ -16,13 +16,16 @@ def homepage():
 
 @APP.route('/getsubs')
 def getsubs():
+	print(flask.request.args)
     if 'validationToken' in flask.request.args:
         with open("test.txt","wb") as fo:
    	        fo.write("Validated".encode())
+   	    print(flask.request.args['validationToken'])
         return flask.Response(flask.request.args['validationToken'], status=200, mimetype='text/plain')
     else:
         with open("test.txt","wb") as fo:
    	        fo.write("Request".encode())
+   	    print('failed')
         return flask.Response('Request')
 
 if __name__ == '__main__':
