@@ -29,7 +29,7 @@ def getsubs():
         return flask.Response(flask.request.get_json(), file=sys.stdout)
 
 @APP.route('/api/v1/customer_info/remote_sql', methods=['GET', 'POST'])
-def getsubs():
+def getapis():
     if flask.request.method == 'POST':
         if 'validationToken' in flask.request.values:
             print(flask.request.values.get('validationToken'), file=sys.stdout)
