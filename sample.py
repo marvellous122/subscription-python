@@ -7,6 +7,7 @@ import pprint
 
 
 import flask
+import requests
 
 APP = flask.Flask(__name__)
 APP.debug = True
