@@ -50,18 +50,19 @@ def authorized():
 
 @APP.route('/subscription')
 def subscription():
-    response = MSGRAPH.post('subscriptions',
-                            headers=request_headers(),
-                            data={
-                                'changeType': 'updated',
-                                'notificationUrl': 'https://avanandev-hugo.avanan.net/getsubs',
-                                'resource': '/me/drive/root',
-                                'expirationDateTime': '2018-02-28T11:23:00.000Z'
-                            },
-                            format='json')
-    response_json = pprint.pformat(response.data)
-    response_json = None if response_json == "b''" else response_json
-    return flask.Response(response_json)
+    # response = MSGRAPH.post('subscriptions',
+    #                         headers=request_headers(),
+    #                         data={
+    #                             'changeType': 'updated',
+    #                             'notificationUrl': 'https://avanandev-hugo.avanan.net/getsubs',
+    #                             'resource': '/me/drive/root',
+    #                             'expirationDateTime': '2018-02-28T11:23:00.000Z'
+    #                         },
+    #                         format='json')
+    # response_json = pprint.pformat(response.data)
+    # response_json = None if response_json == "b''" else response_json
+    # return flask.Response(response_json)
+    return flask.Response('OK')
 
 @APP.route('/getsubs', methods=['GET', 'POST'])
 def getsubs():
