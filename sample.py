@@ -1,20 +1,67 @@
 """send-email sample for Microsoft Graph"""
 # Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
 # See LICENSE in the project root for license information.
+import base64
 import mimetypes
+import os
+import pprint
+import uuid
 import sys
 
-
 import flask
+from flask_oauthlib.client import OAuth
 
-APP = flask.Flask(__name__)
+import config
+
+APP = flask.Flask(__name__, template_folder='static/templates')
 APP.debug = True
 APP.secret_key = 'development'
+OAUTH = OAuth(APP)
+MSGRAPH = OAUTH.remote_app(
+    'microsoft',
+    consumer_key=config.CLIENT_ID,
+    consumer_secret=config.CLIENT_SECRET,
+    request_token_params={'scope': config.SCOPES},
+    base_url=config.RESOURCE + config.API_VERSION + '/',
+    request_token_url=None,
+    access_token_method='POST',
+    access_token_url=config.AUTHORITY_URL + config.TOKEN_ENDPOINT,
+    authorize_url=config.AUTHORITY_URL + config.AUTH_ENDPOINT)
 
 @APP.route('/')
 def homepage():
     """Render the home page."""
-    return flask.Response('Homepage')
+    return flask.render_template('homepage.html')
+
+@APP.route('/login')
+def login():
+    """Prompt user to authenticate."""
+    flask.session['state'] = str(uuid.uuid4())
+    return MSGRAPH.authorize(callback=config.REDIRECT_URI, state=flask.session['state'])
+
+@APP.route('/login/authorized')
+def authorized():
+    """Handler for the application's Redirect Uri."""
+    if str(flask.session['state']) != str(flask.request.args['state']):
+        raise Exception('state returned to redirect URL does not match!')
+    response = MSGRAPH.authorized_response()
+    flask.session['access_token'] = response['access_token']
+    return flask.redirect('/subscription')
+
+@APP.route('/subscription')
+def subscription():
+    response = MSGRAPH.post('subscriptions',
+                            headers=request_headers(),
+                            data={
+                                'changeType': 'updated',
+                                'notificationUrl': 'https://avanandev-hugo.avanan.net/getsubs',
+                                'resource': '/me/drive/root',
+                                'expirationDateTime': '2018-02-28T11:23:00.000Z'
+                            },
+                            format='json')
+    response_json = pprint.pformat(response.data)
+    response_json = None if response_json == "b''" else response_json
+    return flask.Response(response_json)
 
 @APP.route('/getsubs', methods=['GET', 'POST'])
 def getsubs():
@@ -23,22 +70,26 @@ def getsubs():
             print(flask.request.values.get('validationToken'), file=sys.stdout)
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
-            print(flask.request.get_json(), file=sys.stdout)
+            print(flask.request.form, file=sys.stdout)
             return flask.Response(status=200)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
 
-@APP.route('/api/v1/customer_info/remote_sql', methods=['GET', 'POST'])
-def getapis():
-    if flask.request.method == 'POST':
-        if 'validationToken' in flask.request.values:
-            print(flask.request.values.get('validationToken'), file=sys.stdout)
-            return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
-        else:
-            print(flask.request.get_json(), file=sys.stdout)
-            return flask.Response(status=200)
-    else:
-        return flask.Response(flask.request.get_json(), file=sys.stdout)
+@MSGRAPH.tokengetter
+def get_token():
+    """Called by flask_oauthlib.client to retrieve current access token."""
+    return (flask.session.get('access_token'), '')
+
+def request_headers(headers=None):
+    """Return dictionary of default HTTP headers for Graph API calls.
+    Optional argument is other headers to merge/override defaults."""
+    default_headers = {'SdkVersion': 'sample-python-flask',
+                       'x-client-SKU': 'sample-python-flask',
+                       'client-request-id': str(uuid.uuid4()),
+                       'return-client-request-id': 'true'}
+    if headers:
+        default_headers.update(headers)
+    return default_headers
 
 if __name__ == '__main__':
     APP.run()
