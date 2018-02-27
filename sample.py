@@ -24,7 +24,19 @@ def getsubs():
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
             print(flask.request.get_json(), file=sys.stdout)
-            return flask.Response('Request')
+            return flask.Response(status=200)
+    else:
+        return flask.Response(flask.request.get_json(), file=sys.stdout)
+
+@APP.route('/api/v1/customer_info/remote_sql', methods=['GET', 'POST'])
+def getsubs():
+    if flask.request.method == 'POST':
+        if 'validationToken' in flask.request.values:
+            print(flask.request.values.get('validationToken'), file=sys.stdout)
+            return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
+        else:
+            print(flask.request.get_json(), file=sys.stdout)
+            return flask.Response(status=200)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
 
