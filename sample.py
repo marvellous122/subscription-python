@@ -91,6 +91,7 @@ def request_headers(headers=None):
     Optional argument is other headers to merge/override defaults."""
     default_headers = {'SdkVersion': 'sample-python-flask',
                        'x-client-SKU': 'sample-python-flask',
+                       Authorization: 'Bearer ' + get_token(),
                        'client-request-id': str(uuid.uuid4()),
                        'return-client-request-id': 'true'}
     if headers:
