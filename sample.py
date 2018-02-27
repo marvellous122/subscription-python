@@ -3,6 +3,7 @@
 # See LICENSE in the project root for license information.
 import mimetypes
 import sys
+import pprint
 
 
 import flask
@@ -23,7 +24,9 @@ def getsubs():
             print(flask.request.values.get('validationToken'), file=sys.stdout)
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
-            print(flask.request.get_json(), file=sys.stdout)
+            r = requests.get('https://graph.microsoft.com/v1.0/me/drive/root/delta')
+            response_json = pprint.pformat(response.data)
+            print(response_json, file=sys.stdout)
             return flask.Response(status=200)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
