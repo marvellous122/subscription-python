@@ -71,7 +71,12 @@ def getsubs():
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
             print(flask.request.get_json()['value'][0]['resource'], file=sys.stdout)
-            return flask.Response(status=200)
+            resourceUrl = flask.request.get_json()['value'][0]['resource']
+            response = MSGRAPH.get(resourceUrl,
+                                   headers=request_headers())
+            response_json = pprint.pformat(response.data)
+            print(response_json, file=sys.stdout)
+            return flask.Response(response_json)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
 
