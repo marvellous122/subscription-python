@@ -70,7 +70,7 @@ def getsubs():
             print(flask.request.values.get('validationToken'), file=sys.stdout)
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
-            print(flask.request.form, file=sys.stdout)
+            print(flask.request.get_json()['value'][0]['resource'], file=sys.stdout)
             return flask.Response(status=200)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
