@@ -26,7 +26,7 @@ def getsubs():
             print(flask.request.get_json(), file=sys.stdout)
             return flask.Response('Request')
     else:
-        return falsk.Response('GET')
+        return flask.Response(flask.request.get_json(), file=sys.stdout)
 
 if __name__ == '__main__':
     APP.run()
