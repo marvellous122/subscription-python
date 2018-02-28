@@ -95,8 +95,8 @@ def getsubs():
             # }
             # get_response = requests.get('https://graph.microsoft.com/v1.0/drives/b!gxrWhwkPiUyAY9Eg1m2Q9N2fK1qOkDxBqEBp7YFQ1Gxolc6ts_J6QonfoofL9q0U/root', headers=get_head)
             # print(get_response.json(), file=sys.stdout)
-            response = MSGRAPH.get('me/drive/root', headers=request_headers())
-            print (response.json())
+            response = MSGRAPH.get('me/drive/root', headers=request_headers()).data
+            print (response)
             return flask.Response(status=200)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
