@@ -6,8 +6,8 @@ other secure storage mechanism.
 
 CLIENT_ID = '18dc9c86-97a5-437c-9633-144b2b58dfe8'
 CLIENT_SECRET = 'ilFMVQ65_^mmaxuZKM126(]'
-# REDIRECT_URI = 'https://avanandev-hugo.avanan.net/login/authorized'
-REDIRECT_URI = 'http://localhost:5000/login/authorized'
+REDIRECT_URI = 'https://avanandev-hugo.avanan.net/login/authorized'
+# REDIRECT_URI = 'http://localhost:5000/login/authorized'
 
 # AUTHORITY_URL ending determines type of account that can be authenticated:
 # /organizations = organizational accounts only
