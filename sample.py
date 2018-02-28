@@ -6,6 +6,7 @@ import mimetypes
 import os
 import pprint
 import uuid
+import urllib
 import sys
 
 import flask
@@ -82,8 +83,9 @@ def getsubs():
                 'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
                 'grant_type': 'client_credentials'
             }
+            raw_data = urllib.urlencode(parameters)
             print('OK')
-            response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', params=parameters, headers=head)
+            response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data=raw_data, headers=head)
             print(response, file=sys.stdout)
             return flask.Response(response)
     else:
