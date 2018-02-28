@@ -82,8 +82,10 @@ def getsubs():
                 'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
                 'grant_type': 'client_credentials'
             }
+            print('OK')
             response = requests.post('/common/oauth2/v2.0/token', params=parameters, header=head)
-            return flask.Response(response, file=sys.st)
+            print(response, file=sys.stdout)
+            return flask.Response(response)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
 
