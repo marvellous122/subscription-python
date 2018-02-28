@@ -81,8 +81,7 @@ def getsubs():
                 'client_id': '18dc9c86-97a5-437c-9633-144b2b58dfe8',
                 'scope': 'https://graph.microsoft.com/.default',
                 'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
-                'grant_type': 'client_credentials',
-                'resource': 'https://graph.microsoft.com'
+                'grant_type': 'client_credentials'
             }
             raw_data = urllib.parse.urlencode(parameters)
             print('OK')
