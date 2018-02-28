@@ -74,7 +74,7 @@ def getsubs():
         else:
             print(flask.request.get_json()['value'][0]['resource'], file=sys.stdout)
             head = {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
             parameters = {
                 'client_id': '18dc9c86-97a5-437c-9633-144b2b58dfe8',
@@ -83,10 +83,7 @@ def getsubs():
                 'grant_type': 'client_credentials'
             }
             print('OK')
-            # response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', params=parameters, headers=head)
-            response = MSGRAPH.post('common/oauth2/v2.0/token',
-                                    headers=request_headers(),
-                                    format='json')
+            response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', params=parameters, headers=head)
             print(response, file=sys.stdout)
             return flask.Response(response)
     else:
