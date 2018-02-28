@@ -6,6 +6,8 @@ other secure storage mechanism.
 
 CLIENT_ID = '18dc9c86-97a5-437c-9633-144b2b58dfe8'
 CLIENT_SECRET = 'ilFMVQ65_^mmaxuZKM126(]'
+TENANT_KEY = 'edbc9891-0028-40dc-85f5-e975817aacd7'
+DRIVE_ID = 'b!gxrWhwkPiUyAY9Eg1m2Q9N2fK1qOkDxBqEBp7YFQ1Gxolc6ts_J6QonfoofL9q0U'
 REDIRECT_URI = 'https://avanandev-hugo.avanan.net/login/authorized'
 # REDIRECT_URI = 'http://localhost:5000/login/authorized'
 

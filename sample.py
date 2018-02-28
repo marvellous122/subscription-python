@@ -35,14 +35,14 @@ def getsubs():
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
             parameters = {
-                'client_id': '18dc9c86-97a5-437c-9633-144b2b58dfe8',
+                'client_id': config.CLIENT_ID,
                 'scope': 'https://graph.microsoft.com/.default',
-                'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
+                'client_secret': config.CLIENT_SECRET,
                 'grant_type': 'client_credentials'
             }
             raw_data = urllib.parse.urlencode(parameters)
             response = requests.post(
-                'https://login.microsoftonline.com/edbc9891-0028-40dc-85f5-e975817aacd7/oauth2/v2.0/token',
+                'https://login.microsoftonline.com/' + config.TENANT_KEY + '/oauth2/v2.0/token',
                 data=raw_data, headers=head)
             access_type = response.json()['token_type']
             access_token = response.json()['access_token']
@@ -50,7 +50,7 @@ def getsubs():
                 'Authorization': access_type + " " + access_token
             }
             get_response = requests.get(
-                'https://graph.microsoft.com/v1.0/drives/b!gxrWhwkPiUyAY9Eg1m2Q9N2fK1qOkDxBqEBp7YFQ1Gxolc6ts_J6QonfoofL9q0U/root/delta',
+                'https://graph.microsoft.com/v1.0/drives/' + config.DRIVE_ID + '/root/delta',
                 headers=get_head)
             print(get_response.json(), file=sys.stdout)
             return flask.Response(status=200)
