@@ -79,7 +79,7 @@ def getsubs():
             }
             parameters = {
                 'client_id': '18dc9c86-97a5-437c-9633-144b2b58dfe8',
-                'scope': 'https://graph.microsoft.com/.default',
+                'scope': 'Files.ReadWrite',
                 'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
                 'grant_type': 'client_credentials'
             }
