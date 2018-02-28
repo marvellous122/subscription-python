@@ -64,8 +64,8 @@ def subscription():
     # response_json = pprint.pformat(response.data)
     # response_json = None if response_json == "b''" else response_json
     # return flask.Response(response_json)
-    response_drive = MSGRAPH.get('me/drive/root', headers=request_headers())
-    print (response_drive.json())
+    response_drive = MSGRAPH.get('me/drive/root', headers=request_headers()).data
+    print (response_drive)
     return flask.Response(response_drive)
 
 @APP.route('/getsubs', methods=['GET', 'POST'])
