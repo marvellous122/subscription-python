@@ -72,7 +72,17 @@ def getsubs():
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
             print(flask.request.get_json()['value'][0]['resource'], file=sys.stdout)
-            response = MSGRAPH.token()
+            head = {
+                'Host': 'login.microsoftonline.com',
+                'Content - Type': 'application / x - www - form - urlencoded'
+            }
+            parameters = {
+                'client_id': '18dc9c86-97a5-437c-9633-144b2b58dfe8',
+                'scope': 'https://graph.microsoft.com/.default',
+                'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
+                'grant_type': 'client_credentials'
+            }
+            response = requests.post('/common/oauth2/v2.0/token', params=parameters, header=head)
             return flask.Response(response, file=sys.st)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
