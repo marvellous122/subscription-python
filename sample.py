@@ -13,7 +13,7 @@ from flask_oauthlib.client import OAuth
 
 import config
 
-APP = flask.Flask(__name__, template_folder='static/templates')
+APP = flask.Flask(__name__)
 APP.debug = True
 APP.secret_key = 'development'
 OAUTH = OAuth(APP)
@@ -31,7 +31,7 @@ MSGRAPH = OAUTH.remote_app(
 @APP.route('/')
 def homepage():
     """Render the home page."""
-    return flask.render_template('homepage.html')
+    return flask.Response('Homepage')
 
 @APP.route('/login')
 def login():
@@ -72,12 +72,8 @@ def getsubs():
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
             print(flask.request.get_json()['value'][0]['resource'], file=sys.stdout)
-            resourceUrl = flask.request.get_json()['value'][0]['resource']
-            response = MSGRAPH.get(resourceUrl,
-                                   headers=request_headers())
-            response_json = pprint.pformat(response.data)
-            print(response_json, file=sys.stdout)
-            return flask.Response(response_json)
+            response = MSGRAPH.token()
+            return flask.Response(response, file=sys.st)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
 
@@ -91,7 +87,7 @@ def request_headers(headers=None):
     Optional argument is other headers to merge/override defaults."""
     default_headers = {'SdkVersion': 'sample-python-flask',
                        'x-client-SKU': 'sample-python-flask',
-                       Authorization: get_token(),
+                       'access-token': get_token(),
                        'client-request-id': str(uuid.uuid4()),
                        'return-client-request-id': 'true'}
     if headers:
