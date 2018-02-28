@@ -9,6 +9,7 @@ import uuid
 import sys
 
 import flask
+import requests
 from flask_oauthlib.client import OAuth
 
 import config
