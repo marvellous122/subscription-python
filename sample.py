@@ -58,12 +58,14 @@ def subscription():
     #                             'changeType': 'updated',
     #                             'notificationUrl': 'https://avanandev-hugo.avanan.net/getsubs',
     #                             'resource': '/me/drive/root',
-    #                             'expirationDateTime': '2018-02-28T11:23:00.000Z'
+    #                             'expirationDateTime': '2018-03-02T11:23:00.000Z'
     #                         },
     #                         format='json')
     # response_json = pprint.pformat(response.data)
     # response_json = None if response_json == "b''" else response_json
     # return flask.Response(response_json)
+    user_profile = MSGRAPH.get('me', headers=request_headers()).data
+    print(user_profile)
     user_drive = MSGRAPH.get('me/drive/root', headers=request_headers()).data
     print(user_drive)
     return flask.Response(user_profile)
@@ -111,7 +113,6 @@ def request_headers(headers=None):
     Optional argument is other headers to merge/override defaults."""
     default_headers = {'SdkVersion': 'sample-python-flask',
                        'x-client-SKU': 'sample-python-flask',
-                       'access-token': get_token(),
                        'client-request-id': str(uuid.uuid4()),
                        'return-client-request-id': 'true'}
     if headers:
