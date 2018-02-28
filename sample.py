@@ -73,26 +73,28 @@ def getsubs():
             print(flask.request.values.get('validationToken'), file=sys.stdout)
             return flask.Response(flask.request.values.get('validationToken'), status=200, mimetype='text/plain')
         else:
-            print(flask.request.get_json()['value'][0]['resource'], file=sys.stdout)
-            head = {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-            parameters = {
-                'client_id': '18dc9c86-97a5-437c-9633-144b2b58dfe8',
-                'scope': 'Files.ReadWrite',
-                'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
-                'grant_type': 'client_credentials'
-            }
-            raw_data = urllib.parse.urlencode(parameters)
-            print('OK')
-            response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data=raw_data, headers=head)
-            access_type = response.json()['token_type']
-            access_token = response.json()['access_token']
-            get_head = {
-                'Authorization': access_type + access_token
-            }
-            get_response = requests.get('https://graph.microsoft.com/v1.0/drives/b!gxrWhwkPiUyAY9Eg1m2Q9N2fK1qOkDxBqEBp7YFQ1Gxolc6ts_J6QonfoofL9q0U/root', headers=get_head)
-            print(get_response.json(), file=sys.stdout)
+            # print(flask.request.get_json()['value'][0]['resource'], file=sys.stdout)
+            # head = {
+            #     'Content-Type': 'application/x-www-form-urlencoded'
+            # }
+            # parameters = {
+            #     'client_id': '18dc9c86-97a5-437c-9633-144b2b58dfe8',
+            #     'scope': 'https://graph.microsoft.com/.default',
+            #     'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
+            #     'grant_type': 'client_credentials'
+            # }
+            # raw_data = urllib.parse.urlencode(parameters)
+            # print('OK')
+            # response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data=raw_data, headers=head)
+            # access_type = response.json()['token_type']
+            # access_token = response.json()['access_token']
+            # get_head = {
+            #     'Authorization': access_type + access_token
+            # }
+            # get_response = requests.get('https://graph.microsoft.com/v1.0/drives/b!gxrWhwkPiUyAY9Eg1m2Q9N2fK1qOkDxBqEBp7YFQ1Gxolc6ts_J6QonfoofL9q0U/root', headers=get_head)
+            # print(get_response.json(), file=sys.stdout)
+            response = MSGRAPH.get('me/drive/root', headers=request_headers())
+            print (response.json())
             return flask.Response(status=200)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
