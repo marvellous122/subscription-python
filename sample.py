@@ -83,11 +83,17 @@ def getsubs():
                 'client_secret': 'ilFMVQ65_^mmaxuZKM126(]',
                 'grant_type': 'client_credentials'
             }
-            raw_data = urllib.urlencode(parameters)
+            raw_data = urllib.parse.urlencode(parameters)
             print('OK')
             response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data=raw_data, headers=head)
-            print(response, file=sys.stdout)
-            return flask.Response(response)
+            access_type = response.json()['token_type']
+            access_token = response.json()['access_token']
+            ged_head = {
+                'Authorization': access_type + access_token
+            }
+            get_response = requests.post('https://graph.microsoft.com/v1.0/me/drive/root', headers=ged_head)
+            print(get_response.json(), file=sys.stdout)
+            return flask.Response(status=200)
     else:
         return flask.Response(flask.request.get_json(), file=sys.stdout)
 

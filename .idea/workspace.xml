@@ -16,8 +16,8 @@
       <file leaf-file-name="sample.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sample.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="87" column="112" lean-forward="false" selection-start-line="87" selection-start-column="112" selection-end-line="87" selection-end-column="112" />
+            <state relative-caret-position="435">
+              <caret line="96" column="9" lean-forward="true" selection-start-line="96" selection-start-column="9" selection-end-line="96" selection-end-column="9" />
               <folding>
                 <element signature="e#183#196#0" expanded="true" />
               </folding>
@@ -82,6 +82,7 @@
       <find>headers=request_headers()</find>
       <find>client_id</find>
       <find>requests</find>
+      <find>bear</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -452,8 +453,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sample.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="87" column="112" lean-forward="false" selection-start-line="87" selection-start-column="112" selection-end-line="87" selection-end-column="112" />
+        <state relative-caret-position="435">
+          <caret line="96" column="9" lean-forward="true" selection-start-line="96" selection-start-column="9" selection-end-line="96" selection-end-column="9" />
           <folding>
             <element signature="e#183#196#0" expanded="true" />
           </folding>
