@@ -84,7 +84,7 @@ def getsubs():
                 'grant_type': 'client_credentials'
             }
             print('OK')
-            response = requests.post('/common/oauth2/v2.0/token', params=parameters, header=head)
+            response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', params=parameters, headers=head)
             print(response, file=sys.stdout)
             return flask.Response(response)
     else:
