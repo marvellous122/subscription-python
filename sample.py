@@ -48,8 +48,6 @@ def authorized():
         raise Exception('state returned to redirect URL does not match!')
     response = MSGRAPH.authorized_response()
     flask.session['access_token'] = response['access_token']
-    response_drive = MSGRAPH.get('me/drive/root', headers=request_headers())
-    print (response_drive.json())
     return flask.redirect('/subscription')
 
 @APP.route('/subscription')
@@ -66,7 +64,9 @@ def subscription():
     # response_json = pprint.pformat(response.data)
     # response_json = None if response_json == "b''" else response_json
     # return flask.Response(response_json)
-    return flask.Response('OK')
+    response_drive = MSGRAPH.get('me/drive/root', headers=request_headers())
+    print (response_drive.json())
+    return flask.Response(response_drive)
 
 @APP.route('/getsubs', methods=['GET', 'POST'])
 def getsubs():
