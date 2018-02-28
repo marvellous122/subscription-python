@@ -88,10 +88,11 @@ def getsubs():
             response = requests.post('https://login.microsoftonline.com/common/oauth2/v2.0/token', data=raw_data, headers=head)
             access_type = response.json()['token_type']
             access_token = response.json()['access_token']
-            ged_head = {
+            get_head = {
                 'Authorization': access_type + access_token
             }
-            get_response = requests.post('https://graph.microsoft.com/v1.0/drive/18dc9c86-97a5-437c-9633-144b2b58dfe8/activities', headers=ged_head)
+            print(get_user.json(), file=sys.stdout)
+            get_response = requests.get('https://graph.microsoft.com/v1.0/drive/b!gxrWhwkPiUyAY9Eg1m2Q9N2fK1qOkDxBqEBp7YFQ1Gxolc6ts_J6QonfoofL9q0U/activities', headers=get_head)
             print(get_response.json(), file=sys.stdout)
             return flask.Response(status=200)
     else:
