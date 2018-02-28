@@ -91,7 +91,6 @@ def getsubs():
             get_head = {
                 'Authorization': access_type + access_token
             }
-            print(get_user.json(), file=sys.stdout)
             get_response = requests.get('https://graph.microsoft.com/v1.0/drive/b!gxrWhwkPiUyAY9Eg1m2Q9N2fK1qOkDxBqEBp7YFQ1Gxolc6ts_J6QonfoofL9q0U/activities', headers=get_head)
             print(get_response.json(), file=sys.stdout)
             return flask.Response(status=200)
