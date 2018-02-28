@@ -74,8 +74,7 @@ def getsubs():
         else:
             print(flask.request.get_json()['value'][0]['resource'], file=sys.stdout)
             head = {
-                'Host': 'login.microsoftonline.com',
-                'Content - Type': 'application / x - www - form - urlencoded'
+                'Content-Type': 'application/json'
             }
             parameters = {
                 'client_id': '18dc9c86-97a5-437c-9633-144b2b58dfe8',
