@@ -34,6 +34,7 @@ def getsubs():
             head = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
+            print(flask.request.get_json(), file=sys.stdout)
             parameters = {
                 'client_id': config.CLIENT_ID,
                 'scope': 'https://graph.microsoft.com/.default',
@@ -52,7 +53,6 @@ def getsubs():
             get_response = requests.get(
                 'https://graph.microsoft.com/v1.0/drives/' + config.DRIVE_ID + '/root/delta',
                 headers=get_head)
-            print(get_response.json(), file=sys.stdout)
             return flask.Response(status=200)
     else:
         return flask.Response(flask.request.get_json())
